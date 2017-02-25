@@ -1,0 +1,67 @@
+#from lcm example library
+
+try:
+    import cStringIO.StringIO as BytesIO
+except ImportError:
+    from io import BytesIO
+import struct
+
+# format
+#$GPGGA,HHMMSS.SS,DDMM.MMMMM,K,DDDMM.MMMMM,L,N,QQ,PP.P,AAAA.AA,M,
+#±XX.XX,M,SSS,RRRR*CC<CR><LF>
+# sample format $GPGGA,001038.00,3334.2313457,N,11211.0576940,W,2,04,5.4,354.682,M,-26.574,M,7.0,0138*79
+
+class gps_t(object):
+    __slots__ = ["timestamp", "lat_d", "long_d"]
+
+    def __init__(self):
+	self.timestamp = 0
+	self.lat_d = 0.0
+	self.long_d = 0.0
+	
+    def encode(self):
+        buf = BytesIO()
+        buf.write(gps_t._get_packed_fingerprint())
+        self._encode_one(buf)
+        return buf.getvalue()
+
+    def _encode_one(self, buf):
+        buf.write(struct.pack(">q", self.timestamp))
+        buf.write(struct.pack('>q', *self.lat_d))
+        buf.write(struct.pack('>q', *self.long_d))
+        buf.write(b"\0")
+        buf.write(struct.pack(">b", self.enabled))
+
+    def decode(data):
+        if hasattr(data, 'read'):
+            buf = data
+        else:
+            buf = BytesIO(data)
+        if buf.read(8) != gps_t._get_packed_fingerprint():
+            raise ValueError("Decode error")
+        return gps_t._decode_one(buf)
+    decode = staticmethod(decode)
+
+    def _decode_one(buf):
+        self = gps_t()
+        self.timestamp = struct.unpack(">q", buf.read(8))[0]
+        self.lat_d = struct.unpack(">q", buf.read(8))[0]
+        self.long_d = struct.unpack(">q", buf.read(16))[0]
+        return self
+    _decode_one = staticmethod(_decode_one)
+
+    _hash = None
+    def _get_hash_recursive(parents):
+        if gps_t in parents: return 0
+        tmphash = (0x1baa9e29b0fbaa8b) & 0xffffffffffffffff
+        tmphash  = (((tmphash<<1)&0xffffffffffffffff)  + (tmphash>>63)) & 0xffffffffffffffff
+        return tmphash
+    _get_hash_recursive = staticmethod(_get_hash_recursive)
+    _packed_fingerprint = None
+
+    def _get_packed_fingerprint():
+        if gps_t._packed_fingerprint is None:
+            gps_t._packed_fingerprint = struct.pack(">Q", gps_t._get_hash_recursive([]))
+        return gps_t._packed_fingerprint
+    _get_packed_fingerprint = staticmethod(_get_packed_fingerprint)
+

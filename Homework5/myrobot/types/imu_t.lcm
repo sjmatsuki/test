@@ -1,0 +1,16 @@
+package exlcm;
+
+struct imu_t
+{
+	double magX;
+	double magY;
+	double magZ;
+	double accelX;
+	double accelY;
+	double accelZ;
+	double gyroX;
+	double gyroY;
+	double gyroZ;
+	double temp;
+	double pressure;
+}

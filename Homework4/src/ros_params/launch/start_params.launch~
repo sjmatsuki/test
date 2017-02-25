@@ -1,0 +1,13 @@
+<launch>
+	<!-- Ros Params Learning -->
+
+	<node name="ros_params_read" pkg="ros_params" type = "ros_params_broadcaster.py" output="screen">	
+	
+		<param name="fighter1" type="string" value="Sanae"/>
+		<param name="fighter2" type="string" value="Kimbo Slice"/>
+		<param name="results" type="string" value="win"/>
+
+	</node>
+
+</launch>
+

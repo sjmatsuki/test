@@ -1,0 +1,11 @@
+package gpgga;
+
+struct gpgga_t
+{
+    int64_t timestamp;
+    float latitude;
+    float longitude;
+    float altitude;
+    float utm_x;
+    float utm_y;
+}

@@ -1,0 +1,36 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# for IMU
+
+import sys
+import lcm
+import time
+import serial
+import pynmea2
+import utm
+
+from exlcm import imu_t
+
+class Ct(object):
+    def __init__(self, port_name):
+        self.port = serial.Serial(port_name, 115200, timeout=1.)  # 4800-N-8-1
+        self.lc = lcm.LCM()
+        self.packet = imu_t()
+	line = self.port.readline()
+	print (line)
+    
+    def readloop(self):
+        while True:
+        	line = self.port.readline()
+		vals = line.split(",")
+		print(line)
+
+
+
+
+if __name__ == "__main__":	
+    if len(sys.argv) != 2:
+        print "Usage: %s <serial_port>\n" % sys.argv[0]
+        sys.exit(0)
+    myct = Ct(sys.argv[1])
+    myct.readloop()

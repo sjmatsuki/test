@@ -1,0 +1,7 @@
+#!/bin/sh
+
+lcm-gen -j ../types/*.lcm
+
+javac -cp $LCM_JAR exlcm/*.java
+
+jar cf gps_types.jar exlcm/*.class

@@ -1,0 +1,8 @@
+prefix=/home/sanae/catkin_ws/install
+
+Name: learning_ros
+Description: Description of learning_ros
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/sanae/catkin_ws/install/lib 
+Requires: 

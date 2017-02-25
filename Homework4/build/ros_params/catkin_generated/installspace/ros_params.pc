@@ -1,0 +1,8 @@
+prefix=/home/sanae/catkin_ws/install
+
+Name: ros_params
+Description: Description of ros_params
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/sanae/catkin_ws/install/lib 
+Requires: 
