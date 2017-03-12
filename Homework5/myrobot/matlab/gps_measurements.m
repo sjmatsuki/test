@@ -1,0 +1,5 @@
+figure(1)
+plot(gps_utmX, gps_utmY)
+title('GPS Measurements')
+xlabel('UTM X')
+ylabel('UTM Y')

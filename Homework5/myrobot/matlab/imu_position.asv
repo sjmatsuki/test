@@ -1,0 +1,16 @@
+velocityX = cumtrapz(AccelX);
+velocityY = cumtrapz(AccelY);
+
+[b,a] = butter(1, 0.4);
+wX = (filter(b,a,GyroZ))*180;
+
+yobs = AccelY + velocityX.*wX;
+
+figure(1)
+plot(yobs)
+title('Y Obs')
+
+
+
+
+

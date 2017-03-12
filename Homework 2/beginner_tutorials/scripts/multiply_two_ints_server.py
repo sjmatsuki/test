@@ -1,0 +1,17 @@
+#!/usr/bin/env python
+ 
+from beginner_tutorials.srv import *
+import rospy
+
+def handle_multiply_two_ints(req):
+    print "Returning [%s x %s = %s]"%(req.a, req.b, (req.a * req.b))
+    return MultiplyTwoIntsResponse(req.a * req.b)
+
+def mulitply_two_ints_server():
+    rospy.init_node('multiply_two_ints_server')
+    s = rospy.Service('multiply_two_ints', MultiplyTwoInts, handle_multiply_two_ints)
+    print "Ready to add two ints."
+    rospy.spin()
+
+if __name__ == "__main__":
+    multiply_two_ints_server()
